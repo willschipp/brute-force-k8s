@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-user-tenant-orm
+  labels:
+    app: multi-user-tenant-orm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi-user-tenant-orm
+  template:
+    metadata:
+      labels:
+        app: multi-user-tenant-orm
+    spec:
+      containers:
+      - name: multi-user-tenant-orm
+        image: <YOUR_DOCKER_REGISTRY>/multi-user-tenant-orm:latest # Replace with your docker image
+        ports:
+        - containerPort: 8080 # Replace with your application's port
+        env:
+          #Example for external service configuration. Replace with your actual configuration.
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: my-database-secret
+                key: DATABASE_URL
+          # Add other environment variables as needed based on external dependencies.
+
+
+        #Liveness and readiness probes are omitted because the build file does not provide an endpoint.  Add these if your application exposes health endpoints.
+        # livenessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8080
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /actuator/health
+        #     port: 8080
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10

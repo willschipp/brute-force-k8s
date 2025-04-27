@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-activemq-app
+  labels:
+    app: spring-activemq-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-activemq-app
+  template:
+    metadata:
+      labels:
+        app: spring-activemq-app
+    spec:
+      containers:
+      - name: spring-activemq-app
+        image: io.platformconsulting/spring-activemq-app:latest # Replace with your registry and image name
+        ports:
+        - containerPort: 8080 # Replace with your application's port if different
+        env:
+        - name: ACTIVEMQ_BROKER_URL
+          value: "tcp://activemq-service:61616" # Placeholder for ActiveMQ service.  Adjust if needed.
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 1Gi

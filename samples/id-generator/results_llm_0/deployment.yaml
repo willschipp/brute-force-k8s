@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: id-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: id-generator
+  template:
+    metadata:
+      labels:
+        app: id-generator
+    spec:
+      containers:
+      - image: com.example.code/id-generator:0.0.1-SNAPSHOT
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        name: id-generator
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 250m
+            memory: 64Mi

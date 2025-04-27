@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spring-xd-elasticsearch-sink
+  name: spring-xd-elasticsearch-sink
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-xd-elasticsearch-sink
+  template:
+    metadata:
+      labels:
+        app: spring-xd-elasticsearch-sink
+    spec:
+      containers:
+      - env:
+        - name: ELASTICSEARCH_URL
+          value: http://elasticsearch:9200
+        image: <your-docker-registry>/spring-xd-elasticsearch-sink:<your-image-tag>
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        name: spring-xd-elasticsearch-sink
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: live-data-ingestion
+  name: live-data-ingestion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: live-data-ingestion
+  template:
+    metadata:
+      labels:
+        app: live-data-ingestion
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTS
+          value: -Xmx256m
+        image: com.emc.data/live-data-ingestion:0.0.1-SNAPSHOT
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        name: live-data-ingestion
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi

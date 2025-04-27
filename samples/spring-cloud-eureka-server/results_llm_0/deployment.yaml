@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: eureka-server
+  name: eureka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+      - image: com.example.code/eureka-server:1.0-SNAPSHOT
+        livenessProbe:
+          httpGet:
+            path: /eureka/apps
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        name: eureka-server
+        ports:
+        - containerPort: 8761
+        readinessProbe:
+          httpGet:
+            path: /eureka/apps
+            port: 8761
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
