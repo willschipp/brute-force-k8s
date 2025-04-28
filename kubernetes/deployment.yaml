@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-spring-boot-app
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: test-container
+        image: test-image:latest
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+            httpHeaders:
+            - name: Accept
+              value: application/json
+          initialDelaySeconds: 10 
+          periodSeconds: 10 

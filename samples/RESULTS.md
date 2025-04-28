@@ -1,22 +1,7 @@
 # Result Capture
 
 
-## Samples
-
-| link | command line run | container run | llm probability | expectation |
-| ---- | ---------------- | ------------- | --------------- | ----------- |
-| [./data-import] | success | - | 50% | pass |
-| [./db-via-rest] | fail without service | - | 70% | pass |
-| [./example-passing-profiles] | success | - | 0% | pass |
-| [./id-generator] | fail without main | - | 0% | fail |
-| [./jms-listener-example] | fail without service | - | 70% | pass |
-| [./live-data-ingestion] | fail without main | - | 70% | fail |
-| [./multi-tenant-orm] | fail without service | - | 80% | pass |
-| [./spring-cloud-eureka-server] | success | - | 95% | pass |
-| [./spring-xd-elasticsearch-sink] | fail without main | - | 90% | fail |
-
-
-## Advanced probability prompt
+## Probability prompt
 
 ### Prompt
 
@@ -25,20 +10,20 @@ You are an expert software engineer.  Analyze the following build file and answe
 
 ### Results
 
-| link | command line run | container run | llm probability | expectation |
-| ---- | ---------------- | ------------- | --------------- | ----------- |
-| [./data-import] | success | - | 90% | pass |
-| [./db-via-rest] | fail without service | - | 80% | pass |
-| [./example-passing-profiles] | success | - | 95% | pass |
-| [./id-generator] | fail without main | - | 0% | fail |
-| [./jms-listener-example] | fail without service | - | 80% | pass |
-| [./live-data-ingestion] | fail without main | - | 0% | fail |
-| [./multi-tenant-orm] | fail without service | - | 80% | pass |
-| [./spring-cloud-eureka-server] | success | - | 95% | pass |
-| [./spring-xd-elasticsearch-sink] | fail without main | - | 0% | fail |
+| link | command line run |  llm probability | expectation |
+| ---- | ---------------- |  --------------- | ----------- |
+| [./data-import] | success |  90% | pass |
+| [./db-via-rest] | fail without service |  80% | pass |
+| [./example-passing-profiles] | success |  95% | pass |
+| [./id-generator] | fail without main |  0% | fail |
+| [./jms-listener-example] | fail without service |  80% | pass |
+| [./live-data-ingestion] | fail without main | 0% | fail |
+| [./multi-tenant-orm] | fail without service | 80% | pass |
+| [./spring-cloud-eureka-server] | success |  95% | pass |
+| [./spring-xd-elasticsearch-sink] | fail without main | 0% | fail |
 
 
-## Deployment Correct
+## Deployment Generation
 
 ### Prompt
 
@@ -48,12 +33,12 @@ BUILD_FILE=
 
 | link | considerations | deployment yaml correct | 
 | ---- | -------------- | ----------------------- |
-| [./data-import] | RMQ variables, no liveness/readiness endpoints | yes |
-| [./db-via-rest] | database variables, actuator means liveness/readiness endpoints | yes |
-| [./example-passing-profiles] | - | yes |
-| [./jms-listener-example] | AMQ variables, no liveness/readiness endpoints | yes |
-| [./multi-tenant-orm] | database variables, no liveness/readiness endpoints | yes |
-| [./spring-cloud-eureka-server] | - | yes |
+| [./data-import/deployment.yaml] | RMQ variables, no liveness/readiness endpoints | yes |
+| [./db-via-rest/deployment.yaml] | database variables, actuator means liveness/readiness endpoints | yes |
+| [./example-passing-profiles/deployment.yaml] | - | yes |
+| [./jms-listener-example/deployment.yaml] | AMQ variables, no liveness/readiness endpoints | yes |
+| [./multi-tenant-orm/deployment.yaml] | database variables, no liveness/readiness endpoints | yes |
+| [./spring-cloud-eureka-server/deployment.yaml] | - | yes |
 
 
 
@@ -72,14 +57,14 @@ BUILD_FILE=
 
 | link | k8s startup |
 | ---- | ----------- | 
-| [./data-import] | success |
+| [./data-import] | fail readiness probe |
 | [./db-via-rest] | fail without service |
-| [./example-passing-profiles] | success |
+| [./example-passing-profiles] | fail readiness probe |
 | [./id-generator] | fail without main |
-| [./jms-listener-example] | fail without service |
+| [./jms-listener-example] | fail readiness probe |
 | [./live-data-ingestion] | fail without main |
-| [./multi-tenant-orm] | fail without service |
-| [./spring-cloud-eureka-server] | success |
+| [./multi-tenant-orm] | fail readiness probe |
+| [./spring-cloud-eureka-server] | fail readiness probe |
 | [./spring-xd-elasticsearch-sink] | fail without main |
 
 ### LLM Approach

@@ -1,5 +1,0 @@
-70%
-
-Explanation:
-
-The Spring Boot Maven plugin will package the application as a WAR file. While this is deployable, it requires a servlet container (like Tomcat, Jetty, or Undertow) inside the Kubernetes pod. The build file itself doesn't specify which container to use, increasing deployment complexity and reducing the probability of straightforward deployment. A more robust approach would involve a Spring Boot executable JAR, simplifying containerization. The use of a WAR file makes the process slightly more complicated. There's no guarantee the deployment will automatically use the correct servlet container in the Kubernetes Pod. Therefore, the probability is not 100%.
