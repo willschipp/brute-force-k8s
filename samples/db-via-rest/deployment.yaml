@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-app
+  template:
+    metadata:
+      labels:
+        app: spring-boot-app
+    spec:
+      containers:
+      - name: spring-boot-app
+        image: <your-docker-registry>/spring-boot-app:<your-image-tag>
+        ports:
+        - containerPort: 8080 # Adjust if your app uses a different port
+        env:
+        - name: EUREKA_SERVER_URL
+          value: "<your-eureka-server-url>" #  Replace with your Eureka server URL.  Essential due to explicit dependency.
+        - name: SPRING_DATASOURCE_URL
+          value: "<your-database-url>" # Replace with your database URL. Essential due to explicit dependency.
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "<your-database-username>" # Replace with your database username
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "<your-database-password>" # Replace with your database password
+
+        livenessProbe:
+          httpGet:
+            path: /actuator/health # Assumes Spring Boot Actuator health endpoint is available
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+        readinessProbe:
+          httpGet:
+            path: /actuator/health # Assumes Spring Boot Actuator health endpoint is available
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5

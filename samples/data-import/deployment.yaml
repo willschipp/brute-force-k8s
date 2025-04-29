@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-import
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-import
+  template:
+    metadata:
+      labels:
+        app: data-import
+    spec:
+      containers:
+      - name: data-import
+        image: com.emc.data/data-import:0.0.1-SNAPSHOT # Replace with your registry and image name
+        ports:
+        - containerPort: 8080 # Replace with actual port if different
+        env:
+        - name: RABBITMQ_HOST #Example, adjust to your needs.  Consider Secrets for sensitive data.
+          value: ""
+        - name: RABBITMQ_PORT
+          value: "5672"  #Example, adjust to your needs. Consider Secrets for sensitive data.
+        - name: RABBITMQ_USERNAME #Example, adjust to your needs. Consider Secrets for sensitive data.
+          value: ""
+        - name: RABBITMQ_PASSWORD #Example, adjust to your needs. Consider Secrets for sensitive data.
+          value: ""
