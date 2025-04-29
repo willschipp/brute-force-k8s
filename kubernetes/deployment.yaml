@@ -1,14 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-spring-boot-app
+  name: test-container
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      app: test-container
   template:
+    metadata:
+      labels:
+        app: test-container
     spec:
       containers:
       - name: test-container
-        image: test-image:latest
+        image: ghcr.io/willschipp/bruteforce:latest
         ports:
         - containerPort: 8080
         readinessProbe:

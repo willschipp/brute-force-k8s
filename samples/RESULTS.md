@@ -57,14 +57,14 @@ BUILD_FILE=
 
 | link | k8s startup |
 | ---- | ----------- | 
-| [./data-import] | fail readiness probe |
+| [./data-import] | not ready readiness probe |
 | [./db-via-rest] | fail without service |
-| [./example-passing-profiles] | fail readiness probe |
+| [./example-passing-profiles] | not ready readiness probe |
 | [./id-generator] | fail without main |
-| [./jms-listener-example] | fail readiness probe |
+| [./jms-listener-example] | not ready readiness probe |
 | [./live-data-ingestion] | fail without main |
-| [./multi-tenant-orm] | fail readiness probe |
-| [./spring-cloud-eureka-server] | fail readiness probe |
+| [./multi-tenant-orm] | not ready readiness probe |
+| [./spring-cloud-eureka-server] | not ready readiness probe |
 | [./spring-xd-elasticsearch-sink] | fail without main |
 
 ### LLM Approach
@@ -85,6 +85,21 @@ BUILD_FILE=
 | [./multi-tenant-orm] | yes | yes |
 | [./spring-cloud-eureka-server] | yes | yes |
 | [./spring-xd-elasticsearch-sink] | no | N/A |
+
+
+#### Compiled Summary
+
+| link | k8s startup - brute | k8s startup - LLM |
+| ---- | ------------------- | ----------------- |
+| [./data-import] | not ready readiness probe | success | 
+| [./db-via-rest] | fail without service | fail without service |
+| [./example-passing-profiles] | not ready readiness probe | success|
+| [./id-generator] | fail without main | N/A |
+| [./jms-listener-example] | not ready readiness probe | success |
+| [./live-data-ingestion] | fail without main | N/A |
+| [./multi-tenant-orm] | not ready readiness probe | success |
+| [./spring-cloud-eureka-server] | not ready readiness probe | success |
+| [./spring-xd-elasticsearch-sink] | fail without main | N/A |
 
 
 ### Result Summary

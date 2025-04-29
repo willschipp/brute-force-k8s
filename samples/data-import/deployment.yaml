@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: data-import
-        image: com.emc.data/data-import:0.0.1-SNAPSHOT # Replace with your registry and image name
+        # image: com.emc.data/data-import:0.0.1-SNAPSHOT # Replace with your registry and image name
+        image: ghcr.io/willschipp/bruteforce:latest
         ports:
         - containerPort: 8080 # Replace with actual port if different
         env:
